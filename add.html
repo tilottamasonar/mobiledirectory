@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div>
+       <center><h5 style="color: white;">Add Subscriber</h5></center>
+      </div>
+    </div>
+  </nav>
+  
+  	<div class="component-header">
+      <div class="col-md-4">
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
+      <span id="name_err" style="color: red"></span>
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone:</label>
+      <input type="number" class="form-control" id="phone" placeholder="Enter Phone Number" name="phone">
+      <span id="phone_err" style="color: red"></span>
+    </div>
+    <b><p>Subscriber to be added:</p></b>
+    <div class="row">
+		   	<div class="col-md-2"><b>Name</b></div>
+		   	<div class="col-md-2"><p id="sub_name"></p></div><br>
+	    </div>
+	  <div class="row">
+		   	<div class="col-md-2"><b>Phone:</b></div>
+		   	<div class="col-md-2"><p id="sub_phone"></p></div><br>
+	  </div>   
+    <button type="submit" id="btnadd" class="btn btn-success">Add</button>
+   </div>
+ </div>
+   <button type="submit" id="btnadd1" class="btn btn-success">Add</button><hr/>
+   <div class="grid-container row">
+  	    <div class="col-md-4"><b>Name</b></div>
+  		  <div class="col-md-4"><b>Phone</b></div>
+        <div class="col-md-4"><b>Delete</b></div>
+	 </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+
+    $(".grid-container").hide();
+    $("#btnadd1").hide();
+
+		$("#name").keyup(function(){
+			var name = $("#name").val();
+  			$("#sub_name").text(name);
+		  });
+
+		$("#phone").keyup(function(){
+			var phone = $("#phone").val();
+  			$("#sub_phone").text(phone);
+		  });
+
+    $("#btnadd").click(function(){
+     var items = [];
+     var name = $("#name").val();
+     var phone = $("#phone").val();
+
+     if(name == '' && phone =='')
+     {
+        $("#name_err").text('This Field is required and cannot be empty')
+        $("#phone_err").text('This Field is required and cannot be empty')
+        return false;
+     }
+    else if(name != '' && phone =='')
+    {
+       $("#name_err").text('');
+       $("#phone_err").text('This Field is required and cannot be empty');
+       return false;
+    }
+    else if(name == '' && phone !='')
+    {
+       $("#phone_err").text('');
+       $("#name_err").text('This Field is required and cannot be empty');
+       return false;
+    }
+    else
+    {
+        $("#name_err").text('')
+        $("#phone_err").text('');
+
+        var name = $("#name").val();
+        var phone = $("#phone").val();
+
+        items.push(name,phone);
+       $(".grid-container").append('<div class="row"><div class="col-md-4">'+items[0]+'</div><div class="col-md-4">'+items[1]+'</div><div class="col-md-4"><button class="btn btn-sm btn-danger" style="margin-top:2px">Delete</button></div></div>');
+
+        $(".component-header").hide();
+        $(".grid-container").show();
+        $("#btnadd1").show();
+        $("h5").text('Mobile Directory');
+        return true;
+    }
+   });
+
+    $(".row").on('click', function() {
+      $(".row").last().remove();
+   });
+
+    $("#btnadd1").click(function(){
+      $("h5").text('Add Subscriber');
+       $(".component-header").show();
+       $("#name").val('');
+       $("#phone").val('');
+       $("#sub_name").text('');
+       $("#sub_phone").text('')
+       $(".grid-container").hide();
+       $("#btnadd1").hide();
+    });
+});
+  </script>
+
+</body>
+</html>
